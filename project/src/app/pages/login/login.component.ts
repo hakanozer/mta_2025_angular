@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { tcControll } from '../../utils/control';
 import { Router, RouterModule } from '@angular/router';
+import { ApiService } from '../../services/api.service';
 
 
 @Component({
@@ -17,8 +18,12 @@ export class LoginComponent {
   password = '';
   error = '';
 
-  constructor( private router: Router ) {
+  constructor( private router: Router, private api: ApiService ) {
     // sınıf başlatıcı - html katmanınından önce çalışır
+    const loginStatus = localStorage.getItem('access_token');
+    if (loginStatus) {
+      window.location.replace('/dashboard');
+    }
   }
    
 
@@ -41,8 +46,21 @@ export class LoginComponent {
       this.error = 'Password is required';
     }else {
       this.error = '';
+      this.api.login(this.username, this.password).subscribe({
+        next: (res) => {
+          console.log(res.data.access_token)
+          localStorage.setItem('access_token', res.data.access_token);
+          // this.router.navigate(['/dashboard']);
+          window.location.replace('/dashboard');
+        },
+        error: (err) => {
+          this.error = 'Username or password is incorrect';
+          console.log(err)
+        }
+      })
+      // this line
       // window.location.href = '/dashboard'; // sayfa yönlendirme - hata
-      this.router.navigate(['/dashboard']); // sayfa yönlendirme - doğru
+      // this.router.navigate(['/dashboard']); // sayfa yönlendirme - doğru
     }
   }
 
