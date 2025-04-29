@@ -18,4 +18,14 @@ export class ApiService {
     return this.http.post<IUser>( userURL.login, obj )
   }
 
+  profileMe() {
+    const token = localStorage.getItem('access_token');
+    const headers = {
+      authorization: `Bearer ${token}`
+    }
+    return this.http.get( userURL.profileMe, { headers } )
+  }
+
+
+
 }
