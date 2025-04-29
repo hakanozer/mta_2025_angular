@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
   inject(ApiService).profileMe().subscribe({
     next: (res) => {
-      console.log(res)
+      localStorage.setItem('name', res.data.name)
     },
     error: (err) => {
       console.log(err)

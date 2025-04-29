@@ -24,3 +24,8 @@ export interface Meta {
     status:  number;
     message: string;
 }
+
+export interface IProfile {
+    meta: Meta;
+    data: User;
+}

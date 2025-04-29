@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { userURL } from '../utils/urlconts';
-import { IUser } from '../models/IUser';
+import { IProfile, IUser } from '../models/IUser';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class ApiService {
     const headers = {
       authorization: `Bearer ${token}`
     }
-    return this.http.get( userURL.profileMe, { headers } )
+    return this.http.get<IProfile>( userURL.profileMe, { headers } )
   }
 
 

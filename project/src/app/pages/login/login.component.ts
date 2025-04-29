@@ -14,8 +14,8 @@ import { ApiService } from '../../services/api.service';
 })
 export class LoginComponent {
 
-  username = '';
-  password = '';
+  username = 'hakanozer02@gmail.com';
+  password = '123456';
   error = '';
 
   constructor( private router: Router, private api: ApiService ) {
