@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { userURL } from '../utils/urlconts';
+import { productsURL, userURL } from '../utils/urlconts';
 import { IProfile, IUser } from '../models/IUser';
 
 @Injectable({
@@ -24,6 +24,10 @@ export class ApiService {
       authorization: `Bearer ${token}`
     }
     return this.http.get<IProfile>( userURL.profileMe, { headers } )
+  }
+
+  getAllProducts() {
+    return this.http.get(productsURL.getAll)
   }
 
 
