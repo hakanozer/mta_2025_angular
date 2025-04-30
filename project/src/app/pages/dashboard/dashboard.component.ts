@@ -1,21 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { Product } from '../../models/IProducts';
+import { ProductItemComponent } from '../inc/product-item/product-item.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [ProductItemComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
 
-  constructor( private api: ApiService) { }
+  products: Product[] = []
+
+  constructor( private api: ApiService) { 
+  }
 
   ngOnInit() {
     this.api.getAllProducts().subscribe({
         next: (res) => {
           console.log(res);
+          this.products = res.data
         },
         error: (err) => {
           console.log(err);
@@ -23,6 +29,6 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-  
+
 
 }

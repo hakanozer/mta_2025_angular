@@ -3,6 +3,7 @@ import { CanActivateFn } from '@angular/router';
 import { ApiService } from './services/api.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
+  console.log(route.url[0].path);
   const token = localStorage.getItem('access_token');
   const loginStatus = token ? true : false;
   if (!loginStatus) {
