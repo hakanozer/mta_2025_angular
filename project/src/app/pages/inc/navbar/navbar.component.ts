@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,8 +12,25 @@ import { RouterModule } from '@angular/router';
 export class NavbarComponent {
 
   name = ''
-  constructor() {
+  constructor( private api:ApiService ) {
     this.name = localStorage.getItem('name') || ''
   }
+
+  fncLogout() {
+    const answer = confirm('Are you sure you want to logout?')
+    if ( answer ) {
+      this.api.logout().subscribe({
+        next: (res) => {
+            localStorage.removeItem('access_token')
+            localStorage.clear()
+            window.location.replace('/')
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      })
+    }
+  }
+
 
 }

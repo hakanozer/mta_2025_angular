@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.productView()
     this.api.getAllProducts().subscribe({
         next: (res) => {
           console.log(res);
@@ -28,6 +29,18 @@ export class DashboardComponent implements OnInit {
         }
       }
     )
+  }
+
+  productView() {
+    try {
+      const stProduct = localStorage.getItem('product')
+      if (stProduct) {
+        const product = JSON.parse(stProduct) as Product
+        console.log(product);
+      }
+    } catch (error) {
+      localStorage.removeItem('product')
+    }
   }
 
 

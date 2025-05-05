@@ -27,6 +27,7 @@ export class ProductDetailComponent implements OnInit {
           this.item = res.data
           this.bigImage = this.item.images[0]
           this.isLike = getOneLike(this.item.id)
+          localStorage.setItem('product', JSON.stringify(this.item))
         },
         error: (err) => {
           console.error(err);

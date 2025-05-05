@@ -28,6 +28,14 @@ export class ApiService {
     return this.http.get<IProfile>( userURL.profileMe, { headers } )
   }
 
+  logout() {
+    const token = localStorage.getItem('access_token');
+    const headers = {
+      authorization: `Bearer ${token}`
+    }
+    return this.http.post( userURL.logout, {}, { headers } )
+  }
+
   getAllProducts() {
     return this.http.get<IProducts>(productsURL.getAll)
   }
