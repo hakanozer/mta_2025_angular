@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { productsURL, userURL } from '../utils/urlconts';
 import { IProfile, IUser } from '../models/IUser';
 import { IProducts, ISingleProduct } from '../models/IProducts';
+import { IDataUsers } from '../models/IDataUsers';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,14 @@ export class ApiService {
 
   getProductById( id: string ) {
     return this.http.get<ISingleProduct>(productsURL.getAll+"/"+id)
+  }
+
+  getAllUsers() {
+    const token = localStorage.getItem('access_token');
+    const headers = {
+      authorization: `Bearer ${token}`
+    }
+    return this.http.get<IDataUsers>( userURL.getAllUsers, { headers } )
   }
 
 

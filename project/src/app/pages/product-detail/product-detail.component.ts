@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { Product } from '../../models/IProducts';
+import { getOneLike, storeLike } from '../../utils/store';
 
 @Component({
   selector: 'app-product-detail',
@@ -11,6 +13,10 @@ import { ApiService } from '../../services/api.service';
 })
 export class ProductDetailComponent implements OnInit {
 
+  item?: Product
+  bigImage = ''
+  isLike = false
+
   constructor( private route: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit() { 
@@ -18,13 +24,24 @@ export class ProductDetailComponent implements OnInit {
       const productId = params['id'];
       this.api.getProductById(productId).subscribe({
         next: (res) => {
-          console.log(res);
+          this.item = res.data
+          this.bigImage = this.item.images[0]
+          this.isLike = getOneLike(this.item.id)
         },
         error: (err) => {
           console.error(err);
         }
       })
     })
+  }
+
+  changeBigImage(path: string) {
+    this.bigImage = path
+  }
+
+  addLike() {
+    storeLike(this.item!.id)
+    this.isLike = getOneLike(this.item!.id)
   }
 
 

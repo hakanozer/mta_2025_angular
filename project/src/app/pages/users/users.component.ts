@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-users',
@@ -8,5 +9,18 @@ import { Component } from '@angular/core';
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
+
+  constructor( private api: ApiService ) {}
+
+  ngOnInit() {
+    this.api.getAllUsers().subscribe( {
+      next: ( res ) => {
+        console.log(res);
+      },
+      error: ( err ) => {
+        console.log(err);
+      }
+    })
+  }
 
 }
