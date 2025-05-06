@@ -52,6 +52,9 @@ export class ApiService {
     return this.http.get<IDataUsers>( userURL.getAllUsers, { headers } )
   }
 
+  searchProducts( q: string ) {
+    return this.http.get<IProducts>( productsURL.search, { params: { query: q } } )
+  }
 
 
 }

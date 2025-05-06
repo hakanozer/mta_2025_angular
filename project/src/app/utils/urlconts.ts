@@ -11,4 +11,5 @@ export const userURL = {
 // products
 export const productsURL = {
   getAll: `${baseURL}products`,
+  search: `${baseURL}products/search`,
 }
