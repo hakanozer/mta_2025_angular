@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-6">
             <h2>{{item.title}}</h2>
-            <p>Price: {{item.price}}</p>
+            <p>Price: {{item.price | price}}</p>
             <p>Category: {{item.category}}</p>
             <p>{{item.description}}</p>
             @if(isLike) {

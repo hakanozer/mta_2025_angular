@@ -4,11 +4,13 @@ import { ApiService } from '../../services/api.service';
 import { Product } from '../../models/IProducts';
 import { getOneLike, storeLike } from '../../utils/store';
 import { SecurdataService } from '../../services/securdata.service';
+import { PricePipe } from '../../pipes/price.pipe';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [],
+  imports: [PricePipe],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })
@@ -18,7 +20,7 @@ export class ProductDetailComponent implements OnInit {
   bigImage = ''
   isLike = false
 
-  constructor( private route: ActivatedRoute, private api: ApiService, private securData: SecurdataService) { }
+  constructor( private route: ActivatedRoute, private api: ApiService, private securData: SecurdataService, private seo: SeoService) { }
 
   ngOnInit() { 
     this.route.params.subscribe(params => {
@@ -30,6 +32,7 @@ export class ProductDetailComponent implements OnInit {
           this.isLike = getOneLike(this.item.id)
           const stSecurt = this.securData.encrypt(JSON.stringify(this.item))
           localStorage.setItem('product', stSecurt)
+          this.seo.seo(this.item.title, this.item.description)
         },
         error: (err) => {
           console.error(err);
