@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Product } from '../../models/IProducts';
 import { getOneLike, storeLike } from '../../utils/store';
+import { SecurdataService } from '../../services/securdata.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,7 +18,7 @@ export class ProductDetailComponent implements OnInit {
   bigImage = ''
   isLike = false
 
-  constructor( private route: ActivatedRoute, private api: ApiService) { }
+  constructor( private route: ActivatedRoute, private api: ApiService, private securData: SecurdataService) { }
 
   ngOnInit() { 
     this.route.params.subscribe(params => {
@@ -27,7 +28,8 @@ export class ProductDetailComponent implements OnInit {
           this.item = res.data
           this.bigImage = this.item.images[0]
           this.isLike = getOneLike(this.item.id)
-          localStorage.setItem('product', JSON.stringify(this.item))
+          const stSecurt = this.securData.encrypt(JSON.stringify(this.item))
+          localStorage.setItem('product', stSecurt)
         },
         error: (err) => {
           console.error(err);

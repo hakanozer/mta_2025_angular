@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Product } from '../../models/IProducts';
 import { ProductItemComponent } from '../inc/product-item/product-item.component';
+import { SecurdataService } from '../../services/securdata.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit {
 
   products: Product[] = []
 
-  constructor( private api: ApiService) { 
+  constructor( private api: ApiService, private securData: SecurdataService) { 
   }
 
   ngOnInit() {
@@ -35,7 +36,8 @@ export class DashboardComponent implements OnInit {
     try {
       const stProduct = localStorage.getItem('product')
       if (stProduct) {
-        const product = JSON.parse(stProduct) as Product
+        const plainText = this.securData.decrypt(stProduct)
+        const product = JSON.parse(plainText) as Product
         console.log(product);
       }
     } catch (error) {
